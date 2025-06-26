@@ -49,68 +49,75 @@ const COLORS = {
   accent: '#F59E42',
   primary: '#4F46E5',
   secondary: '#D946EF'
-}
+};
 
-import { ref, computed } from 'vue'
+import { ref, computed } from 'vue';
 
 // --- Game Logic ---
+
 // PUBLIC_INTERFACE
 const WORD_LIST = [
   'NUXT', 'COMPUTER', 'VUE', 'JAVASCRIPT',
   'PROGRAMMING', 'HANGMAN', 'MINIMAL', 'THEME', 'PALLETE', 'RESPONSIVE'
-]
+];
 
-type GameStatus = 'playing' | 'won' | 'lost'
+type GameStatus = 'playing' | 'won' | 'lost';
 
-const gameWord = ref('')
-const guessedLetters = ref<string[]>([])
-const wrongGuesses = ref<string[]>([])
-const gameStatus = ref<GameStatus>('playing')
+const gameWord = ref('');
+const guessedLetters = ref<string[]>([]);
+const wrongGuesses = ref<string[]>([]);
+const gameStatus = ref<GameStatus>('playing');
 
-function pickRandomWord() {
-  const idx = Math.floor(Math.random() * WORD_LIST.length)
-  return WORD_LIST[idx]
+// PUBLIC_INTERFACE
+function pickRandomWord(): string {
+  // Chooses a random word from the word list
+  const idx = Math.floor(Math.random() * WORD_LIST.length);
+  return WORD_LIST[idx];
 }
 
 // PUBLIC_INTERFACE
-function startNewGame() {
-  gameWord.value = pickRandomWord()
-  guessedLetters.value = []
-  wrongGuesses.value = []
-  gameStatus.value = 'playing'
+function startNewGame(): void {
+  gameWord.value = pickRandomWord();
+  guessedLetters.value = [];
+  wrongGuesses.value = [];
+  gameStatus.value = 'playing';
 }
 
-function normalizeInput(ltr: string) {
-  return ltr.trim().toUpperCase().slice(0, 1)
+function normalizeInput(ltr: string): string {
+  // Ensure only a single uppercase character is used
+  return ltr.trim().toUpperCase().slice(0, 1);
 }
 
 // PUBLIC_INTERFACE
-function handleGuess(letter: string) {
-  if (gameStatus.value !== 'playing' || !letter.match(/[A-Z]/)) return
+function handleGuess(letter: string): void {
+  if (gameStatus.value !== 'playing' || !letter.match(/[A-Z]/)) return;
 
-  const ltr = normalizeInput(letter)
+  const ltr = normalizeInput(letter);
   // Ignore already-used letter
-  if (guessedLetters.value.includes(ltr)) return
+  if (guessedLetters.value.includes(ltr)) return;
 
-  guessedLetters.value.push(ltr)
+  guessedLetters.value.push(ltr);
   if (gameWord.value.includes(ltr)) {
     // Check win (unique letters must all be guessed)
-    const wordLetters = [...new Set(gameWord.value.split(''))]
-    const allGuessed = wordLetters.every((w) => guessedLetters.value.includes(w))
-    if (allGuessed) gameStatus.value = 'won'
+    // Here, split returns the array of characters; Set removes duplicates.
+    const wordLetters = [...new Set(gameWord.value.split(''))];
+    const allGuessed = wordLetters.every((w) => guessedLetters.value.includes(w));
+    if (allGuessed) gameStatus.value = 'won';
   } else {
     // Add incorrect guesses to wrongGuesses, update gameStatus if lost condition met
-    wrongGuesses.value = [...wrongGuesses.value, ltr]
+    wrongGuesses.value = [...wrongGuesses.value, ltr];
     if (wrongGuesses.value.length >= 6) {
-      gameStatus.value = 'lost'
+      gameStatus.value = 'lost';
     }
   }
 }
 
-const isInputDisabled = computed(() => gameStatus.value !== 'playing')
+const isInputDisabled = computed(() => gameStatus.value !== 'playing');
 
-// On mount, start a game
-if (process.client) startNewGame();
+// On mount, start a new game (for Nuxt 3, always run startNewGame on client)
+if (typeof window !== 'undefined') {
+  startNewGame();
+}
 </script>
 
 <style scoped>
