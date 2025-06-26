@@ -1,0 +1,4 @@
+{
+    "command": "npm install",
+    "working_directory": "/home/kavia/workspace/code-generation/guessmaster-hangman-72989-18d93fad/hangman_frontend_workspace/hangman_frontend"
+}
