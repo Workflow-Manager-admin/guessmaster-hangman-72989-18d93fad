@@ -89,12 +89,14 @@ function handleGuess(letter: string) {
   if (gameStatus.value !== 'playing' || !letter.match(/[A-Z]/)) return
 
   const ltr = normalizeInput(letter)
-  if (guessedLetters.value.includes(ltr)) return // ignore already-used
+  // Ignore already-used letter
+  if (guessedLetters.value.includes(ltr)) return
 
   guessedLetters.value.push(ltr)
   if (gameWord.value.includes(ltr)) {
     // Check win
-    const wordLetters = [...new Set(gameWord.value.split(''))] // Unique letters
+    // Unique letters
+    const wordLetters = [...new Set(gameWord.value.split(''))]
     const allGuessed = wordLetters.every((w) => guessedLetters.value.includes(w))
     if (allGuessed) gameStatus.value = 'won'
   } else {
