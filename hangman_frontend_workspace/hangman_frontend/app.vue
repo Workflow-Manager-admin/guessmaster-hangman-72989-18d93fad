@@ -94,8 +94,7 @@ function handleGuess(letter: string) {
 
   guessedLetters.value.push(ltr)
   if (gameWord.value.includes(ltr)) {
-    // Check win
-    // Unique letters
+    // Check win (unique letters must all be guessed)
     const wordLetters = [...new Set(gameWord.value.split(''))]
     const allGuessed = wordLetters.every((w) => guessedLetters.value.includes(w))
     if (allGuessed) gameStatus.value = 'won'
