@@ -43,7 +43,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 // -- COLOR PALETTE --
 const COLORS = {
   accent: '#F59E42',
@@ -63,15 +63,16 @@ const WORD_LIST = [
   'PROGRAMMING', 'HANGMAN', 'MINIMAL', 'THEME', 'PALLETE', 'RESPONSIVE',
 ];
 
-type GameStatus = 'playing' | 'won' | 'lost';
+// Type for game status, now plain string union documentation
+// type GameStatus = 'playing' | 'won' | 'lost';
 
-const gameWord = ref<string>('');
-const guessedLetters = ref<string[]>([]);
-const wrongGuesses = ref<string[]>([]);
-const gameStatus = ref<GameStatus>('playing');
+const gameWord = ref('');
+const guessedLetters = ref([]);
+const wrongGuesses = ref([]);
+const gameStatus = ref('playing');
 
 // PUBLIC_INTERFACE
-function pickRandomWord(): string {
+function pickRandomWord() {
   /**
    * Chooses a random word from the word list.
    */
@@ -80,7 +81,7 @@ function pickRandomWord(): string {
 }
 
 // PUBLIC_INTERFACE
-function startNewGame(): void {
+function startNewGame() {
   /**
    * Starts a new game: reset word, guesses, and status.
    */
@@ -91,12 +92,12 @@ function startNewGame(): void {
 }
 
 /** Ensures input is single uppercase character. */
-function normalizeInput(ltr: string): string {
+function normalizeInput(ltr) {
   return ltr.trim().toUpperCase().slice(0, 1);
 }
 
 // PUBLIC_INTERFACE
-function handleGuess(letter: string): void {
+function handleGuess(letter) {
   /**
    * Handles a letter guess from the user.
    */
