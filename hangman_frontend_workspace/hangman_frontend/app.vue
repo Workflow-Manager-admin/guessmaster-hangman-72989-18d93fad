@@ -44,67 +44,76 @@
 </template>
 
 <script setup lang="ts">
-// Color palette
+// -- COLOR PALETTE --
 const COLORS = {
   accent: '#F59E42',
   primary: '#4F46E5',
-  secondary: '#D946EF'
+  secondary: '#D946EF',
 };
 
 import { ref, computed } from 'vue';
 
-// --- Game Logic ---
+// --- GAME LOGIC ---
 
-// PUBLIC_INTERFACE
+/** PUBLIC_INTERFACE
+ * List of possible words for hangman game.
+ */
 const WORD_LIST = [
   'NUXT', 'COMPUTER', 'VUE', 'JAVASCRIPT',
-  'PROGRAMMING', 'HANGMAN', 'MINIMAL', 'THEME', 'PALLETE', 'RESPONSIVE'
+  'PROGRAMMING', 'HANGMAN', 'MINIMAL', 'THEME', 'PALLETE', 'RESPONSIVE',
 ];
 
 type GameStatus = 'playing' | 'won' | 'lost';
 
-const gameWord = ref('');
+const gameWord = ref<string>('');
 const guessedLetters = ref<string[]>([]);
 const wrongGuesses = ref<string[]>([]);
 const gameStatus = ref<GameStatus>('playing');
 
 // PUBLIC_INTERFACE
 function pickRandomWord(): string {
-  // Chooses a random word from the word list
+  /**
+   * Chooses a random word from the word list.
+   */
   const idx = Math.floor(Math.random() * WORD_LIST.length);
   return WORD_LIST[idx];
 }
 
 // PUBLIC_INTERFACE
 function startNewGame(): void {
+  /**
+   * Starts a new game: reset word, guesses, and status.
+   */
   gameWord.value = pickRandomWord();
   guessedLetters.value = [];
   wrongGuesses.value = [];
   gameStatus.value = 'playing';
 }
 
+/** Ensures input is single uppercase character. */
 function normalizeInput(ltr: string): string {
-  // Ensure only a single uppercase character is used
   return ltr.trim().toUpperCase().slice(0, 1);
 }
 
 // PUBLIC_INTERFACE
 function handleGuess(letter: string): void {
-  if (gameStatus.value !== 'playing' || !letter.match(/[A-Z]/)) return;
+  /**
+   * Handles a letter guess from the user.
+   */
+  if (gameStatus.value !== 'playing' || !/^[A-Z]$/.test(letter)) return;
 
   const ltr = normalizeInput(letter);
-  // Ignore already-used letter
   if (guessedLetters.value.includes(ltr)) return;
 
   guessedLetters.value.push(ltr);
+
   if (gameWord.value.includes(ltr)) {
-    // Check win (unique letters must all be guessed)
-    // Here, split returns the array of characters; Set removes duplicates.
-    const wordLetters = [...new Set(gameWord.value.split(''))];
+    // Check win condition (all unique letters guessed)
+    const wordLetters = Array.from(new Set(gameWord.value.split('')));
     const allGuessed = wordLetters.every((w) => guessedLetters.value.includes(w));
     if (allGuessed) gameStatus.value = 'won';
   } else {
-    // Add incorrect guesses to wrongGuesses, update gameStatus if lost condition met
+    // Add wrong guess and check for loss
     wrongGuesses.value = [...wrongGuesses.value, ltr];
     if (wrongGuesses.value.length >= 6) {
       gameStatus.value = 'lost';
@@ -114,7 +123,7 @@ function handleGuess(letter: string): void {
 
 const isInputDisabled = computed(() => gameStatus.value !== 'playing');
 
-// On mount, start a new game (for Nuxt 3, always run startNewGame on client)
+// On client-only, start a new game on load.
 if (typeof window !== 'undefined') {
   startNewGame();
 }
