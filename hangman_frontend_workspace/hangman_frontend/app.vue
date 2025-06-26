@@ -98,7 +98,8 @@ function handleGuess(letter: string) {
     const allGuessed = wordLetters.every((w) => guessedLetters.value.includes(w))
     if (allGuessed) gameStatus.value = 'won'
   } else {
-    wrongGuesses.value.push(ltr)
+    // Ensure .value usage on refs for both wrongGuesses (array ref) and gameStatus (ref)
+    wrongGuesses.value = [...wrongGuesses.value, ltr]
     if (wrongGuesses.value.length >= 6) {
       gameStatus.value = 'lost'
     }

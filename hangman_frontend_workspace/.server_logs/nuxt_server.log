@@ -1,0 +1,51 @@
+
+> dev
+> nuxt dev --port 3000 --host 0.0.0.0
+
+[ nuxi ] Nuxt 3.16.0 with Nitro 2.11.6
+
+ 
+              █▀▀▀▀▀▀▀███▀█▀▀▀███▀▀▀▀▀▀▀█
+              █ █▀▀▀█ █▄█▄█▀▄█▄██ █▀▀▀█ █
+              █ █   █ █▄ ▄█▄▄▀▄▄█ █   █ █
+              █ ▀▀▀▀▀ █ ▄▀▄ ▄▀▄▀█ ▀▀▀▀▀ █
+              █▀▀▀▀▀█▀▀▀ ▄ █▀▄█▄▀█▀█▀█▀██
+              █ ▄ ▀▀▄▀▀██ █▄█▄▀█▄▀▀▀▀█ ▀█
+              █▀█▄▀▀▄▀█▀▀▀█ ▀█ ▀█▀ ▀█▀▀ █
+              █ ▄█▀▀ ▀█ ▄▀▀▀█▄▀█▀█▀█ █ ▀█
+              █ █▀▄▄ ▀▄    █▀██ ▀▀▀▀▄▀█▄█
+              █▀▀▀▀▀▀▀█   █▄█▄▄ █▀█   ▀▀█
+              █ █▀▀▀█ █▀▄▀█ ▀█  ▀▀▀  ▀ ▀█
+              █ █   █ █ ▀▄▀▀ ▀█▄▀▄▄▄█ ▄ █
+              █ ▀▀▀▀▀ █ ▀  ▀█▄▀▄▀    ▀▀ █
+              ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+ 
+  ➜ Local:    http://0.0.0.0:3000/
+  ➜ Network:  http://172.17.0.2:3000/ [QR code]
+
+  ➜ DevTools: press Shift + Alt + D in the browser (v2.2.1)
+
+✔ Vite client built in 69ms
+
+ ERROR  Pre-transform error: [vue/compiler-sfc] Unexpected token, expected "," (50:8)
+
+/home/kavia/workspace/code-generation/guessmaster-hangman-72989-18d93fad/hangman_frontend_workspace/hangman_frontend/app.vue
+280|      return () => (
+281|        <canvas
+282|          ref={canvas}
+   |          ^
+283|          width="160"
+284|          height="155"
+  Plugin: vite:vue
+  File: /home/kavia/workspace/code-generation/guessmaster-hangman-72989-18d93fad/hangman_frontend_workspace/hangman_frontend/app.vue:50:8
+  100|    } else {
+  101|      wrongGuesses.value.push(ltr)
+  102|      if (wrongGuesses.value.length >= 6) {
+     |                ^
+  103|        gameStatus.value = 'lost'
+  104|      }
+
+✔ Vite server built in 465ms
+[nitro] ✔ Nuxt Nitro server built in 1003ms
+ℹ Vite client warmed up in 3ms
+ℹ Vite server warmed up in 701ms
