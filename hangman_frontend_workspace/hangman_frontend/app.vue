@@ -243,23 +243,15 @@ const HangmanDrawing = defineComponent({
   setup(props) {
     // Each part is revealed step by step
     const partsToDraw = [
-      // [ x1, y1, x2, y2, lineWidth, strokeStyle ]
-      // base, pole, beam, rope
       (ctx: CanvasRenderingContext2D) => { ctx.lineWidth=7; ctx.strokeStyle='#222'; ctx.beginPath(); ctx.moveTo(25,145); ctx.lineTo(130,145); ctx.stroke(); },
       (ctx: CanvasRenderingContext2D) => { ctx.lineWidth=6; ctx.strokeStyle='#ccc'; ctx.beginPath(); ctx.moveTo(45,22); ctx.lineTo(45,145); ctx.stroke(); }, 
       (ctx: CanvasRenderingContext2D) => { ctx.lineWidth=5.5; ctx.strokeStyle=COLORS.primary; ctx.beginPath(); ctx.moveTo(42,22); ctx.lineTo(105,22); ctx.stroke(); },
       (ctx: CanvasRenderingContext2D) => { ctx.lineWidth=4.5; ctx.strokeStyle=COLORS.accent; ctx.beginPath(); ctx.moveTo(104,22);ctx.lineTo(104,43);ctx.stroke(); },
-      // head
       (ctx: CanvasRenderingContext2D) => { ctx.lineWidth=3.5; ctx.strokeStyle=COLORS.secondary; ctx.beginPath(); ctx.arc(104,54,11,0,2*Math.PI); ctx.stroke(); },
-      // body
       (ctx: CanvasRenderingContext2D) => { ctx.lineWidth=4; ctx.strokeStyle='#444'; ctx.beginPath(); ctx.moveTo(104,65); ctx.lineTo(104,110); ctx.stroke(); },
-      // left arm
       (ctx: CanvasRenderingContext2D) => { ctx.lineWidth=3.3; ctx.strokeStyle='#888'; ctx.beginPath(); ctx.moveTo(104,74); ctx.lineTo(85,98); ctx.stroke(); },
-      // right arm
       (ctx: CanvasRenderingContext2D) => { ctx.lineWidth=3.3; ctx.strokeStyle='#888'; ctx.beginPath(); ctx.moveTo(104,74); ctx.lineTo(124,98); ctx.stroke(); },
-      // left leg
       (ctx: CanvasRenderingContext2D) => { ctx.lineWidth=3.2; ctx.strokeStyle='#b8712b'; ctx.beginPath(); ctx.moveTo(104,110); ctx.lineTo(88,134); ctx.stroke(); },
-      // right leg
       (ctx: CanvasRenderingContext2D) => { ctx.lineWidth=3.2; ctx.strokeStyle='#b8712b'; ctx.beginPath(); ctx.moveTo(104,110); ctx.lineTo(120,134); ctx.stroke(); }
     ];
 
