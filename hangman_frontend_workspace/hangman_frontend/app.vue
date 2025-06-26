@@ -100,9 +100,9 @@ function handleGuess(letter: string): void {
   /**
    * Handles a letter guess from the user.
    */
-  if (gameStatus.value !== 'playing' || !/^[A-Z]$/.test(letter)) return;
-
   const ltr = normalizeInput(letter);
+
+  if (gameStatus.value !== 'playing' || !ltr.match(/^[A-Z]$/)) return;
   if (guessedLetters.value.includes(ltr)) return;
 
   guessedLetters.value.push(ltr);
